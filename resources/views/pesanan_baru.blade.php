@@ -19,6 +19,7 @@
                             <td>Alamat Pemotretan</td>
                             <td>Status Pesanan</td>
                             <td>Waktu Pemotretan</td>
+                            <td>Aksi</td>
                         </thead>
                         <tbody>
                             @foreach ($pesanan as $item)
@@ -30,6 +31,16 @@
                                     <td>{{ $item->alamat_pemotretan }}</td>
                                     <td>{{ $item->status }}</td>
                                     <td>{{ $item->waktu_pemotretan }}</td>
+                                    <td class="d-flex justify-content-around">
+                                        <a href="{{ route('admin.edit', $item->id)}}" class="btn btn-primary col-6">Ubah Status</a>
+                                        {!! Form::open([
+                                            'route' => ['admin.destroy', $item->id],
+                                            'method' => 'delete',
+                                            'onsubmit' => 'return confirm("Yakin mau dihapus?")',
+                                        ]) !!}
+                                        {!! Form::submit('Hapus', ['class' => 'btn btn-danger col-12']) !!}
+                                        {!! Form::close()!!}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

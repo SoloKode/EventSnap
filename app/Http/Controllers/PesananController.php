@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class PesananController extends Controller
 {
     /**
@@ -11,7 +11,9 @@ class PesananController extends Controller
      */
     public function index()
     {
-        //
+        $data['pesanan'] = \App\Models\Pesanan::where('id_user', Auth::id())->get();
+        $data['judul'] = 'Data Pesanan Baru';
+        return view('pesanan_index', $data);
     }
 
     /**
@@ -65,7 +67,17 @@ class PesananController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['pesanan'] = \App\Models\Pesanan::findOrFail($id);
+        $data['route'] = ['pesanan.update', $id];
+        $data['method'] = 'put';
+        $data['tombol'] = 'Update';
+        $data['judul'] = 'Edit Data Pesanan';
+        $data['paket'] = [
+            'A' => 'Paket A',
+            'B' => 'Paket B',
+            'C' => 'Paket C',
+        ];
+        return view('pesanan_create', $data);
     }
 
     /**
@@ -73,7 +85,20 @@ class PesananController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validasiData = $request->validate(
+            [
+                'name' => 'required',
+                'paket' => 'required',
+                'nomor_hp' => 'required',
+                'alamat_pemotretan' => 'required',
+                'waktu_pemotretan' => 'required',
+            ]
+        );
+        $dokter = \App\Models\Pesanan::findOrFail($id);
+        $dokter->fill($validasiData);
+        $dokter->save();
+        flash('Data berhasil disimpan')->success();
+        return back();
     }
 
     /**

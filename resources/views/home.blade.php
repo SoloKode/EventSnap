@@ -1,7 +1,7 @@
 @extends('layouts.sbadmin2')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -13,8 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    {{ __('You are logged in!') }}
+                    {{ __('Selamat Datang') }}, {{Auth::user()->name}}
                 </div>
             </div>
         </div>
