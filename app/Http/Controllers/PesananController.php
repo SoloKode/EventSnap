@@ -4,28 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class PesananController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data['user'] = \App\Models\User::all();
-        $data['judul'] = 'Data-data User';
-        return view('user_index',$data);
+        //
     }
-    public function pesanan(){
-        $data['pesanan'] = \App\Models\Pesanan::all();
-        $data['judul'] = 'Data Pesanan';
-        return view('data_pesanan',$data);
-    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $data['pesanan'] = new \App\Models\Pesanan();
+        $data['route'] = 'pesanan.store';
+        $data['method'] = 'POST';
+        $data['tombol'] = 'SIMPAN';
+        $data['judul'] = 'Pesan Fotographer';
+        $data['paket'] = [
+            'A' => 'Paket A',
+            'B' => 'Paket B',
+            'C' => 'Paket C',
+        ];
+        return view('pesanan_create',$data);
     }
 
     /**
@@ -33,7 +37,19 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validasiData = $request->validate([
+            'name' =>'required',
+            'paket' =>'required',
+            'nomor_hp' =>'required',
+            'alamat_pemotretan' =>'required',
+            'waktu_pemotretan' =>'required',
+        ]);
+        $pesanan = new \App\Models\Pesanan();
+        $pesanan->fill($validasiData);
+        $pesanan->save();
+
+        flash('Data berhasil disimpan')->success();
+        return back();
     }
 
     /**

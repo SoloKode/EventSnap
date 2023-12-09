@@ -13,16 +13,22 @@
                     <table class="table table-bordered table-hover table-striped">
                         <thead>
                             <td>ID</td>
-                            <td>Nama Pengguna</td>
-                            <td>Email</td>
-                            <td>Create</td>
+                            <td>Nama</td>
+                            <td>Paket</td>
+                            <td>Nomor HP</td>
+                            <td>Alamat Pemotretan</td>
+                            <td>Waktu Pemotretan</td>
+                            <td>Created At</td>
                         </thead>
                         <tbody>
-                            @foreach ($user as $item)
+                            @foreach ($pesanan as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->paket }}</td>
+                                    <td>{{ $item->nomor_hp }}</td>
+                                    <td>{{ $item->alamat_pemotretan }}</td>
+                                    <td>{{ $item->waktu_pemotretan }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     {{-- <td class="d-flex justify-content-around">
                                         <a href="{{ route('dokter.edit', $item->id)}}" class="btn btn-primary">Edit</a>
